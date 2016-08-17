@@ -12,6 +12,21 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/classes/com/dekequan/spring/applicationContext.xml</param-value>
 	</context-param>
+	
+		<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<!-- 加载SpringMVC的xml到 spring的上下文容器中 -->
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/classes/com/dekequan/spring/dispatcher-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index-redirect.jsp</welcome-file>
