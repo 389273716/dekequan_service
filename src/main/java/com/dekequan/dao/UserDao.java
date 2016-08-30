@@ -19,12 +19,12 @@ public interface UserDao {
 	 * @param id
 	 * @return
 	 */
-	public abstract User findUserById(Integer id);
+	public abstract User findUserById(Integer userId);
 	
 	/**
 	 * 保存用户数据
 	 * @param user
 	 */
-	public abstract void save(User user);
+	public abstract void saveUser(User user);
 	
 }
