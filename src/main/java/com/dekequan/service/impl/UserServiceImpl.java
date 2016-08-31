@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.dekequan.base.ResponseBase;
 import com.dekequan.base.ResponseRe;
 import com.dekequan.dao.UserDao;
+import com.dekequan.library.SystemTokenUtil;
+import com.dekequan.library.UserUtil;
 import com.dekequan.orm.User;
 import com.dekequan.service.UserService;
 
@@ -23,7 +25,6 @@ import com.dekequan.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
-
 	@Autowired
 	private UserDao userDao;
 	
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
 		partResponse.setData(partData);
 		return partResponse;
 	}
-
+	
 	public User login(String userName, String password) {
 		Map<String, String> partQuery = new HashMap<String, String>();
 		partQuery.put("userName", userName);
@@ -99,4 +100,63 @@ public class UserServiceImpl implements UserService {
 		return partResponse;
 	}
 
+	public User register(String userName, String password){
+		Map<String, String> partQuery = new HashMap<String, String>();
+		partQuery.put("userName", userName);
+		User exist = userDao.findUserByLogin(partQuery);
+		if(null != exist){
+			return null;
+		}
+		User user = new User();
+		user.setUserName(userName);
+		user.setPassword(password);
+//		user.setCreateTime();
+		user.setDkToken(SystemTokenUtil.generateSysToken());
+//		user.setExpireTime(expireTime);
+//		user.setLevel(level);
+		user.setNickName(UserUtil.DEFAULT_NICK_NAME);
+//		user.setRank(rank);
+		user.setSex(UserUtil.DEFAULT_SEX);
+		
+		return user;
+	}
+	
+	public ResponseBase<Map<String, Object>> userExistError() {
+		ResponseBase<Map<String, Object>> partResponse = new ResponseBase<Map<String, Object>>();
+		Integer partRe = ResponseRe.RE_FAILURE;
+		String partMsg = "USER_EXIST";
+		partResponse.setRe(partRe);
+		partResponse.setMsg(partMsg);
+		partResponse.setData(new HashMap<String, Object>());
+		
+		return partResponse;
+	}
+
+	@Override
+	public ResponseBase<Map<String, Object>> constructResultRegister(User user) {
+		ResponseBase<Map<String, Object>> response = new ResponseBase<Map<String,Object>>();
+		if(null == user){
+			return userExistError();
+		}
+		Integer partRe = ResponseRe.RE_SUCCESS;
+		String partMsg = "SUCCESS";
+		Map<String, Object> partData = new LinkedHashMap<String, Object>();
+		partData.put("token", user.getDkToken());
+		response.setRe(partRe);
+		response.setMsg(partMsg);
+		response.setData(partData);
+		return response;
+	}
+
+	@Override
+	public ResponseBase<Map<String, Object>> constructCheckCodeError() {
+		ResponseBase<Map<String, Object>> partResponse = new ResponseBase<Map<String, Object>>();
+		Integer partRe = ResponseRe.RE_FAILURE;
+		String partMsg = "CHECK_CODE__ERROR";
+		partResponse.setRe(partRe);
+		partResponse.setMsg(partMsg);
+		partResponse.setData(new HashMap<String, Object>());
+		
+		return partResponse;
+	}
 }

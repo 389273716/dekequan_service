@@ -56,5 +56,23 @@ public interface UserService {
 	 * @return
 	 */
 	public abstract ResponseBase<Map<String, Object>> constructResultLogin(User user);
-
+	/**
+	 *  用户注册
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	public abstract User register(String userName, String password);
+	
+	/**
+	 * 构建注册
+	 * @param dkToken
+	 * @return
+	 */
+	public abstract ResponseBase<Map<String, Object>> constructResultRegister(User user);
+	/**
+	 * 构建验证失败返回
+	 * @return
+	 */
+	public abstract ResponseBase<Map<String, Object>> constructCheckCodeError();
 }
