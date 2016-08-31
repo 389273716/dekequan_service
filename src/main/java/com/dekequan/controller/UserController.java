@@ -59,12 +59,15 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public String login(@RequestParam(value = "request") String request) {
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^request: 登录");
-		Json.toJson(request);
-		User partUser = userService.login("x1", "123");
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^request: 登录" + request);
+		Map<String, Object> requestJson = (Map<String, Object>) Json.fromJson(request, Map.class);
+		String userName = requestJson.get("userName") == null ? null : (String) requestJson.get("userName");
+		String password = requestJson.get("password") == null ? null : (String) requestJson.get("password");
+		User partUser = userService.login(userName, password);
 		ResponseBase<Map<String, Object>> partResponseBase = userService.constructResultLogin(partUser);
 		return Json.toJson(partResponseBase);
 	}
