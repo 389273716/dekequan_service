@@ -1,5 +1,7 @@
 package com.dekequan.dao;
 
+import java.util.Map;
+
 import com.dekequan.orm.User;
 
 /**
@@ -26,5 +28,12 @@ public interface UserDao {
 	 * @param user
 	 */
 	public abstract void saveUser(User user);
+	
+	/**
+	 * 账号密码查询用户数据
+	 * @param query
+	 * @return
+	 */
+	public abstract User findUserByLogin(Map<String, String> query);
 	
 }
