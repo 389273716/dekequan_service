@@ -33,6 +33,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value="register", method=RequestMethod.POST)
+	@ResponseBody
 	public String register(String request) {
 		HashMap<String, Object> reqMap = (HashMap<String, Object>) Json.fromJson(request, HashMap.class);
 		String userName = reqMap.get("userName").toString();
