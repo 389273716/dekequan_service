@@ -3,17 +3,23 @@ package com.dekequan.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dekequan.base.ResponseBase;
 import com.dekequan.library.Json;
 import com.dekequan.library.LoginUtil;
 import com.dekequan.orm.User;
 import com.dekequan.service.UserService;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 /**
@@ -54,6 +60,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@ResponseBody
 	public String login(@RequestParam(value = "request") String request) {
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^request: 登录");
 		Json.toJson(request);
