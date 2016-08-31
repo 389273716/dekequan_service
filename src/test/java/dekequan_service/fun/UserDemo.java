@@ -1,5 +1,7 @@
 package dekequan_service.fun;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -7,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.dekequan.base.ResponseBase;
 import com.dekequan.library.Print;
 import com.dekequan.orm.User;
 import com.dekequan.service.UserService;;
@@ -42,11 +45,19 @@ public class UserDemo {
 	/**
 	 * id查询用户数据
 	 */
-	@Test
 	public void findUserTest() {
 		int userId = 1;
 		User partUser = userServiceImpl.querySingleUser(userId);
-		Print.print(userServiceImpl.constructResult(partUser));
+		Print.print(userServiceImpl.constructResultUserCenter(partUser));
+	}
+	
+	@Test
+	public void loginUserTest() {
+		String userName = "x1";
+		String password = "1231";
+		User partUser = userServiceImpl.login(userName, password);
+		ResponseBase<Map<String, Object>> partResponse = userServiceImpl.constructResultLogin(partUser);
+		Print.print(partResponse);
 	}
 	
 }

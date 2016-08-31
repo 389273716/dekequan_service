@@ -41,16 +41,11 @@ public class UserServiceImpl implements UserService {
 	 * 个人接口
 	 * @return
 	 */
-	public ResponseBase<Map<String, Object>> constructResult(User user) {
+	public ResponseBase<Map<String, Object>> constructResultUserCenter(User user) {
 		ResponseBase<Map<String, Object>> partResponse = new ResponseBase<Map<String, Object>>();
 
 		if (user == null) {
-			Integer partRe = ResponseRe.RE_NO_DATA;
-			String partMsg = "NO_DATA";
-			partResponse.setRe(partRe);
-			partResponse.setMsg(partMsg);
-			partResponse.setData(new HashMap<String, Object>());
-			return partResponse;
+			return responseToError();
 		}
 		
 		Integer partRe = ResponseRe.RE_SUCCESS;
@@ -66,6 +61,42 @@ public class UserServiceImpl implements UserService {
 		partResponse.setRe(partRe);
 		partResponse.setMsg(partMsg);
 		partResponse.setData(partData);
+		return partResponse;
+	}
+
+	public User login(String userName, String password) {
+		Map<String, String> partQuery = new HashMap<String, String>();
+		partQuery.put("userName", userName);
+		partQuery.put("password", password);
+		User partUser = userDao.findUserByLogin(partQuery);
+		return partUser;
+	}
+
+	public ResponseBase<Map<String, Object>> constructResultLogin(User user) {
+		ResponseBase<Map<String, Object>> partResponse = new ResponseBase<Map<String, Object>>();
+
+		if (user == null) {
+			return responseToError();
+		}
+		
+		Integer partRe = ResponseRe.RE_SUCCESS;
+		String partMsg = "SUCCESS";
+		Map<String, Object> partData = new LinkedHashMap<String, Object>();
+		partData.put("token", user.getDkToken());
+		partResponse.setRe(partRe);
+		partResponse.setMsg(partMsg);
+		partResponse.setData(partData);
+		return partResponse;
+	}
+
+	public ResponseBase<Map<String, Object>> responseToError() {
+		ResponseBase<Map<String, Object>> partResponse = new ResponseBase<Map<String, Object>>();
+
+		Integer partRe = ResponseRe.RE_NO_DATA;
+		String partMsg = "NO_DATA";
+		partResponse.setRe(partRe);
+		partResponse.setMsg(partMsg);
+		partResponse.setData(new HashMap<String, Object>());
 		return partResponse;
 	}
 

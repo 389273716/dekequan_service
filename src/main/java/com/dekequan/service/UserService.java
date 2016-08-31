@@ -19,23 +19,42 @@ public interface UserService {
 
 	/**
 	 * 用户id
+	 * 
 	 * @param id
 	 * @return
 	 */
 	public abstract User querySingleUser(Integer id);
-	
+
 	/**
 	 * 保存用户信息
+	 * 
 	 * @param user
 	 * @return
 	 */
 	public abstract boolean save(User user);
-	
+
 	/**
 	 * 构建
+	 * 
 	 * @param user
 	 * @return
 	 */
-	public ResponseBase<Map<String, Object>> constructResult(User user);
+	public abstract ResponseBase<Map<String, Object>> constructResultUserCenter(User user);
 	
+	/**
+	 * 用户登录
+	 * 
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	public abstract User login(String userName, String password);
+	
+	/**
+	 * 构建登录
+	 * @param user
+	 * @return
+	 */
+	public abstract ResponseBase<Map<String, Object>> constructResultLogin(User user);
+
 }
