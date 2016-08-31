@@ -7,7 +7,10 @@
 		resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
 	<!-- 用户账号密码查询 -->
 	<select id="findUserByLogin" parameterType="Map" resultType="user">
-		select * from user where userName=#{userName,jdbcType=VARCHAR} and password=#{password,jdbcType=VARCHAR};
+		select * from user where userName=#{userName,jdbcType=VARCHAR}
+		<if test="password != null">
+			and password=#{password,jdbcType=VARCHAR};
+		</if>
 	</select>
 		
 	<!-- 根据id查询得到一个user对象 -->
