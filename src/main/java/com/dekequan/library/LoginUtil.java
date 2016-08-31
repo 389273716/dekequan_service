@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.dekequan.base.utils;
+package com.dekequan.library;
 
 /**
  * @author qzr

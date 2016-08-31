@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.dekequan.base.utils;
+package com.dekequan.library;
 
 /**
  * 系统授权码周边的工具类
