@@ -40,7 +40,7 @@
 	</bean>
 
 	<!-- 静态文件 -->
-	<mvc:resources location="/images/" mapping="/images/**" />
+	<mvc:resources location="/img/" mapping="/img/**" />
 	<mvc:resources location="/js/" mapping="/js/**" />
 	<mvc:resources location="/font/" mapping="/font/**" />
 	<mvc:resources location="/css/" mapping="/css/**" />

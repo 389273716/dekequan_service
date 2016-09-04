@@ -5,26 +5,35 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dekequan.base.ResponseBase;
+import com.dekequan.base.ResponseRe;
 import com.dekequan.library.Json;
 import com.dekequan.library.UserUtil;
 import com.dekequan.orm.User;
 import com.dekequan.service.UserService;
 
+import sun.awt.ModalityEvent;
+
 /**
  * @author qzr
  *
  */
+@SuppressWarnings("unchecked")
 @Controller
 @RequestMapping(value = "/v1/user")
 public class UserController {
+	
 	@Autowired
 	private UserService userService;
+	
+	private ModelAndView view = new ModelAndView();;
 
 	/**
 	 * 注册接口
@@ -53,17 +62,63 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public String login(@RequestParam(value = "request") String request) {
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^request: 登录" + request);
-		Map<String, Object> requestJson = (Map<String, Object>) Json.fromJson(request, Map.class);
-		String userName = requestJson.get("userName") == null ? null : (String) requestJson.get("userName");
-		String password = requestJson.get("password") == null ? null : (String) requestJson.get("password");
-		User partUser = userService.login(userName, password);
-		ResponseBase<Map<String, Object>> partResponseBase = userService.constructResultLogin(partUser);
+		Map<String, Object> requestJson = new HashMap<String, Object>();
+		ResponseBase<Map<String, Object>> partResponseBase =  new ResponseBase<Map<String, Object>>();
+		try {
+			requestJson = (Map<String, Object>) Json.fromJson(request, Map.class);
+			String userName = requestJson.get("userName") == null ? null : (String) requestJson.get("userName");
+			String password = requestJson.get("password") == null ? null : (String) requestJson.get("password");
+			User partUser = userService.login(userName, password);
+			userService.constructResultLogin(partUser);
+		} catch (Exception e) {
+			return Json.toJson(userService.constructCheckCodeError());
+		}
 		return Json.toJson(partResponseBase);
 	}
-
+	
+	/**
+	 * 后台登录页面
+	 * @return
+	 */
+	@RequestMapping(value = "/backstage/login", method = RequestMethod.GET)
+	public ModelAndView backstageLogin() {
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^后台登录");
+		view.setViewName("/login");
+		return view;
+	}
+	
+	/**
+	 * 后台登录
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping(value = "/backstage/login", method = RequestMethod.POST)
+	@ResponseBody
+	public String backstageLogin(@RequestParam(value = "account", required = true) String account, @RequestParam(value = "password", required = true) String password) {
+		System.out.println("^^^^^^^^^^^^^^^^^^^后台登录");
+		System.out.println("account:" + account);
+		System.out.println("password:" + password);
+		ResponseBase<String> reponse = new ResponseBase<String>();
+		reponse.setRe(ResponseRe.RE_SUCCESS);
+		reponse.setMsg("SUCCESSS");
+		reponse.setData("/v1/user/welcome");
+		return Json.toJson(reponse);
+	}
+	
+	/**
+	 * 后台欢迎页面
+	 * 注意:注意进入这个页面需要登录，零时不加登录验证
+	 * @return
+	 */
+	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
+	public ModelAndView backstageWelcome() {
+		System.out.println("^^^^^^^^^^^^^^^^^^^后台欢迎页面");
+		view.setViewName("backstage-index");
+		return view;
+	}
+	
 }

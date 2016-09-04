@@ -70,6 +70,7 @@ public interface UserService {
 	 * @return
 	 */
 	public abstract ResponseBase<Map<String, Object>> constructResultRegister(User user);
+	
 	/**
 	 * 构建验证失败返回
 	 * @return
