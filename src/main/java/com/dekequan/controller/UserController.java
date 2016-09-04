@@ -41,13 +41,14 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="register", method=RequestMethod.POST)
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/register", method=RequestMethod.POST)
 	@ResponseBody
-	public String register(String request) {
+	public String register(@RequestParam(value="request") String request) {
 		HashMap<String, Object> reqMap = (HashMap<String, Object>) Json.fromJson(request, HashMap.class);
-		String userName = reqMap.get("userName").toString();
-		String password = reqMap.get("password").toString();
-		String code = reqMap.get("code").toString();
+		String userName =null ==  reqMap.get("userName") ? null : (String) reqMap.get("userName");
+		String password = null == reqMap.get("password") ? null : (String) reqMap.get("password");
+		String code = null == reqMap.get("code") ? null :reqMap.get("code").toString();
 		// 校验验证码
 		if (!"success".equals(UserUtil.checkCode(code))) {
 			return Json.toJson(userService.constructCheckCodeError());
