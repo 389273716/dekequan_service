@@ -16,4 +16,5 @@ public class SystemTokenUtil {
 		//more code here
 		return "a2d3r4t5y6u5g3f5";
 	}
+	
 }

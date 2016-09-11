@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +43,6 @@ public class UserController {
 	 * @param request
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/register", method=RequestMethod.POST)
 	@ResponseBody
 	public String register(@RequestParam(value="request") String request) {
@@ -65,16 +66,13 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(@RequestParam(value = "request") String request) {
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^request: 登录" + request);
-		Map<String, Object> requestJson = new HashMap<String, Object>();
+	public String login(@RequestBody User user, @RequestHeader HttpHeaders headers) {
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^request: 登录" + Json.toJson(headers));
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^request: 登录" + Json.toJson(user));
 		ResponseBase<Map<String, Object>> partResponseBase =  new ResponseBase<Map<String, Object>>();
 		try {
-			requestJson = (Map<String, Object>) Json.fromJson(request, Map.class);
-			String userName = requestJson.get("userName") == null ? null : (String) requestJson.get("userName");
-			String password = requestJson.get("password") == null ? null : (String) requestJson.get("password");
-			User partUser = userService.login(userName, password);
-			userService.constructResultLogin(partUser);
+			User partUser = userService.login(user.getUserName(), user.getPassword());
+			partResponseBase = userService.constructResultLogin(partUser);
 		} catch (Exception e) {
 			return Json.toJson(userService.constructCheckCodeError());
 		}
@@ -118,7 +116,7 @@ public class UserController {
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public ModelAndView backstageWelcome() {
 		System.out.println("^^^^^^^^^^^^^^^^^^^后台欢迎页面");
-		view.setViewName("backstage-index");
+		view.setViewName("container/user/container-user");
 		return view;
 	}
 	
