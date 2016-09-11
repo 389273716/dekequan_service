@@ -39,7 +39,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="box-header" style="background-color: #f5fafe">
+				<div class="box-header">
 					<h3 class="box-title">
 						<a href="add-reptile.html"><span class="label label-primary"
 							style="padding: 5px 25px;">新增</span></a>
