@@ -77,7 +77,7 @@ public class UserController {
 			return Json.toJson(userService.constructCheckCodeError());
 		}
 		return Json.toJson(partResponseBase);
-	}
+	} 
 	
 	/**
 	 * 后台登录页面
