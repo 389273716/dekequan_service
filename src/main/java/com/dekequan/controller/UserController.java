@@ -116,7 +116,7 @@ public class UserController {
 	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public ModelAndView backstageWelcome() {
 		System.out.println("^^^^^^^^^^^^^^^^^^^后台欢迎页面");
-		view.setViewName("container/user/container-user");
+		view.setViewName("backstage-container");
 		return view;
 	}
 	

@@ -29,9 +29,9 @@
   <![endif]-->
 <script type="text/javascript" src="/js/jQuery-2.2.0.min.js"></script>
 <script type="text/javascript" src="/js/myAjax.js"></script>
-<script type="text/javascript">
+<script type="text/javascript">	
 	$(function() {
-		alert("jquery hello");
+		alert("hello jquery!")
 		$("#login-button").click(function() {
 			login();
 		});

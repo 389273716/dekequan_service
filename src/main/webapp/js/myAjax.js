@@ -20,6 +20,7 @@ $.extend({
 			success : function( data ) {
 				var reponse = JSON.parse(data);
 				if (reponse.re == 1) {
+					alert(reponse.data);
 					window.location.href = reponse.data;
 				}
 			},
