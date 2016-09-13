@@ -6,8 +6,8 @@
 	<!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型 
 		resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
 	<!-- 用户账号密码查询 -->
-	<select id="findUserByLogin" parameterType="Map" resultType="user">
-		select * from user where userName=#{userName,jdbcType=VARCHAR}
+	<select id="findUserByLogin" parameterType="java.util.Map" resultType="user">
+		select * from dk_user where userName=#{userName,jdbcType=VARCHAR}
 		<if test="password != null">
 			and password=#{password,jdbcType=VARCHAR};
 		</if>
@@ -15,12 +15,12 @@
 		
 	<!-- 根据id查询得到一个user对象 -->
 	<select id="findUserById" parameterType="int" resultType="user">
-		select * from user where userId=#{userId}
+		select * from dk_user where userId = #{userId}
 	</select>
 
 	<!-- 新增 -->
 	<insert id="saveUser" parameterType="User">
-		insert into user (
+		insert into dk_user (
 		userName, password, nickName, 
 		rank, level, img, 
 		createTime, accessToken, dkToken, 
@@ -31,4 +31,14 @@
 		#{createTime}, #{accessToken}, #{dkToken}, 
 		#{expireTime}, #{sex})
 	</insert>
+	
+	<!-- 修改失效时间 -->
+	<update id="updateUserExpireTime" parameterType="Map">
+	    update dk_user set expireTime = #{expireTime} where userId = #{userId}
+	</update>
+	
+	<!-- 修改个人信息 -->
+	<update id="updateUser" parameterType="Map">
+	    update dk_user set nickName = #{nickName}, sex = #{sex}, img = #{img} where userId = #{id}
+	</update>
 </mapper>

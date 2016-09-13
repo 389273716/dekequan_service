@@ -68,7 +68,7 @@
 	<!-- 配置切面织入的范围,把事务边界定在service层 -->
 	<aop:config>
 		<aop:advisor advice-ref="advice"
-			pointcut="execution(* com.dekequan.service.impl.*.*(..))" />
+			pointcut="execution(* com.dekequan.dao.*.*(..))" />
 	</aop:config>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -76,6 +76,4 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	
-	<bean id="userServiceImpl" class="com.dekequan.service.impl.UserServiceImpl"></bean>
-
 </beans>

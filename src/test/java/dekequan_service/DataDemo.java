@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -15,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class DataDemo {
 
 	@Resource
-	private DriverManagerDataSource dataSource;
+	private BasicDataSource dataSource;
 	
 	//数据库连接测试
 	@Test

@@ -17,11 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.dekequan.base.ResponseBase;
 import com.dekequan.base.ResponseRe;
 import com.dekequan.library.Json;
+import com.dekequan.library.Print;
 import com.dekequan.library.UserUtil;
 import com.dekequan.orm.User;
 import com.dekequan.service.UserService;
-
-import sun.awt.ModalityEvent;
 
 /**
  * @author qzr
@@ -73,6 +72,51 @@ public class UserController {
 		try {
 			User partUser = userService.login(user.getUserName(), user.getPassword());
 			partResponseBase = userService.constructResultLogin(partUser);
+		} catch (Exception e) {
+			return Json.toJson(userService.constructCheckCodeError());
+		}
+		return Json.toJson(partResponseBase);
+	}
+	
+	/**
+	 * 注销
+	 * @param id
+	 * @param headers
+	 * @return
+	 */
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	@ResponseBody
+	public String logout(@RequestBody Map<String, Object> request, @RequestHeader HttpHeaders headers) {
+		ResponseBase<Map<String, Object>> partResponseBase =  new ResponseBase<Map<String, Object>>();
+		try {
+			String partId = (String) request.get("id");
+			if (userService.logout(Integer.valueOf(partId))) {
+				partResponseBase = userService.constructReturnLogout();
+			} else {
+				partResponseBase = userService.constructCheckCodeError();
+			}
+		} catch (Exception e) {
+			return Json.toJson(userService.constructCheckCodeError());
+		}
+		return Json.toJson(partResponseBase);
+	}
+	
+	/**
+	 * 修改个人资料
+	 * @param query
+	 * @param headers
+	 * @return
+	 */
+	@RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public String modifyUserInfo(@RequestBody Map<String, Object> query, @RequestHeader HttpHeaders headers) {
+		ResponseBase<Map<String, Object>> partResponseBase =  new ResponseBase<Map<String, Object>>();
+		try {
+			if (userService.modifyUserInfo(query)) {
+				partResponseBase = userService.constructReturnUserInfo();
+			} else {
+				partResponseBase = userService.constructCheckCodeError();
+			}
 		} catch (Exception e) {
 			return Json.toJson(userService.constructCheckCodeError());
 		}

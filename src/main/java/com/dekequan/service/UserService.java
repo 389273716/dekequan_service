@@ -51,6 +51,19 @@ public interface UserService {
 	public abstract User login(String userName, String password);
 	
 	/**
+	 * 注销登录
+	 * @param expireTime
+	 * @return
+	 */
+	public abstract boolean logout(Integer userId);
+	
+	/**
+	 * 修改个人资料
+	 * @return
+	 */
+	public abstract boolean modifyUserInfo(Map<String, Object> query);
+	
+	/**
 	 * 构建登录
 	 * @param user
 	 * @return
@@ -76,4 +89,17 @@ public interface UserService {
 	 * @return
 	 */
 	public abstract ResponseBase<Map<String, Object>> constructCheckCodeError();
+	
+	/**
+	 * 结构注销结构
+	 * @return
+	 */
+	public abstract ResponseBase<Map<String, Object>> constructReturnLogout();
+	
+	/**
+	 * 构建个人用户修改结构
+	 * @return
+	 */
+	public abstract ResponseBase<Map<String, Object>> constructReturnUserInfo();
+	
 }

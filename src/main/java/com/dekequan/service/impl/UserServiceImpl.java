@@ -10,10 +10,14 @@ import org.springframework.stereotype.Service;
 import com.dekequan.base.ResponseBase;
 import com.dekequan.base.ResponseRe;
 import com.dekequan.dao.UserDao;
+import com.dekequan.library.Json;
+import com.dekequan.library.MyDate;
+import com.dekequan.library.Print;
 import com.dekequan.library.SystemTokenUtil;
 import com.dekequan.library.UserUtil;
 import com.dekequan.orm.User;
 import com.dekequan.service.UserService;
+import com.sun.corba.se.spi.ior.ObjectKey;
 
 /**
  * <p>
@@ -25,15 +29,16 @@ import com.dekequan.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
+	
 	@Autowired
-	private UserDao userDao;
+	private UserDao userDaoImpl;
 	
 	public User querySingleUser(Integer id) {
-		return userDao.findUserById(id);
+		return userDaoImpl.findUserById(id);
 	}
 	
 	public boolean save(User user) {
-		userDao.saveUser(user);
+		userDaoImpl.saveUser(user);
 		return true;
 	}
 	
@@ -68,8 +73,40 @@ public class UserServiceImpl implements UserService {
 		Map<String, String> partQuery = new HashMap<String, String>();
 		partQuery.put("userName", userName);
 		partQuery.put("password", password);
-		User partUser = userDao.findUserByLogin(partQuery);
+		User partUser = userDaoImpl.findUserByLogin(partQuery);
 		return partUser;
+	}
+	
+	@Override
+	public boolean logout(Integer userId) {
+		User partUser = querySingleUser(userId);
+		if (partUser == null) {
+			return false;
+		}
+		
+		MyDate partMyDate = new MyDate();
+		Map<String, String> partQuery = new HashMap<String, String>();
+		partQuery.put("userId", userId.toString());
+		partQuery.put("expireTime", partMyDate.getCurrentDateTime());
+		userDaoImpl.updateUserExpireTime(partQuery);
+		return true;
+	}
+	
+	@Override
+	public boolean modifyUserInfo(Map<String, Object> query) {
+		String partId = query.get("id").toString();
+		User partUser = querySingleUser(Integer.valueOf(partId));
+		System.out.println("^^^^^^^^^json:" + Json.toJson(partUser));
+		if (partUser == null) {
+			return false;
+		}
+//		Map<String, Object> partQuery = new HashMap<String, Object>();
+//		partQuery.put("userId", Integer.valueOf(query.get("id")));
+//		partQuery.put("nickName", query.get("nickName"));
+//		partQuery.put("sex", Integer.valueOf(query.get("sex")));
+//		partQuery.put("img", query.get("img"));
+		userDaoImpl.updateUser(query);
+		return true;
 	}
 
 	public ResponseBase<Map<String, Object>> constructResultLogin(User user) {
@@ -103,7 +140,7 @@ public class UserServiceImpl implements UserService {
 	public User register(String userName, String password){
 		Map<String, String> partQuery = new HashMap<String, String>();
 		partQuery.put("userName", userName);
-		User exist = userDao.findUserByLogin(partQuery);
+		User exist = userDaoImpl.findUserByLogin(partQuery);
 		if(null != exist){
 			return null;
 		}
@@ -156,8 +193,31 @@ public class UserServiceImpl implements UserService {
 		partResponse.setRe(partRe);
 		partResponse.setMsg(partMsg);
 		partResponse.setData(new HashMap<String, Object>());
-		
 		return partResponse;
 	}
+
+	@Override
+	public ResponseBase<Map<String, Object>> constructReturnLogout() {
+		return constructSuccess(new HashMap<String, Object>());
+	}
+
+	@Override
+	public ResponseBase<Map<String, Object>> constructReturnUserInfo() {
+		return constructSuccess(new HashMap<String, Object>());
+	}
 	
+	/**
+	 * 构建成功
+	 * @return
+	 */
+	private ResponseBase<Map<String, Object>> constructSuccess(Map<String, Object> obj) {
+		ResponseBase<Map<String, Object>> partResponse = new ResponseBase<Map<String, Object>>();
+		Integer partRe = ResponseRe.RE_SUCCESS;
+		String partMsg = "SUCCESS";
+		partResponse.setRe(partRe);
+		partResponse.setMsg(partMsg);
+		partResponse.setData(obj);
+		return partResponse;
+	}
+
 }

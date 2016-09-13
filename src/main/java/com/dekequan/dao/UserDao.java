@@ -2,6 +2,10 @@ package com.dekequan.dao;
 
 import java.util.Map;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dekequan.orm.User;
 
 /**
@@ -35,5 +39,17 @@ public interface UserDao {
 	 * @return
 	 */
 	public abstract User findUserByLogin(Map<String, String> query);
+	
+	/**
+	 * 修改失效时间
+	 * @param query
+	 */
+	public abstract void updateUserExpireTime(Map<String, String> query);
+	
+	/**
+	 * 修改个人资料
+	 * @param query
+	 */
+	public abstract void updateUser(Map<String, Object> query);
 	
 }
