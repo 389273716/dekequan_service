@@ -61,7 +61,7 @@ public class UserController {
 	/**
 	 * 用户登录
 	 * @param request
-	 * @return
+	 * @return 
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
@@ -76,7 +76,7 @@ public class UserController {
 			return Json.toJson(userService.constructCheckCodeError());
 		}
 		return Json.toJson(partResponseBase);
-	}
+	} 
 	
 	/**
 	 * 注销
