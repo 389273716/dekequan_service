@@ -1,7 +1,7 @@
 package com.dekequan.orm.user;
 
 /**
- * 用户简单类实体，用于其他模块调用
+ * 用户简单类实体，用于其他模块查询调用
  * @Author 佘俊
  * @Date 2016/9/15 0:29
  * @email shejun1123@163.com
