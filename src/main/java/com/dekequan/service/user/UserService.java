@@ -1,9 +1,9 @@
-package com.dekequan.service;
+package com.dekequan.service.user;
 
 import java.util.Map;
 
 import com.dekequan.base.ResponseBase;
-import com.dekequan.orm.User;
+import com.dekequan.orm.user.User;
 
 /**
  * 

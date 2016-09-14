@@ -1,12 +1,8 @@
-package com.dekequan.dao;
+package com.dekequan.dao.user;
 
 import java.util.Map;
 
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.dekequan.orm.User;
+import com.dekequan.orm.user.User;
 
 /**
  * 

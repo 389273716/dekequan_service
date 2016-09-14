@@ -1,4 +1,4 @@
-package com.dekequan.orm;
+package com.dekequan.orm.user;
 
 /**
  * <p>用户实体</p>

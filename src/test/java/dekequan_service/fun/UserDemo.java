@@ -12,10 +12,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dekequan.base.ResponseBase;
-import com.dekequan.dao.UserDao;
+import com.dekequan.dao.user.UserDao;
 import com.dekequan.library.Print;
-import com.dekequan.orm.User;
-import com.dekequan.service.UserService;;
+import com.dekequan.orm.user.User;
+import com.dekequan.service.user.UserService;;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:/com/dekequan/spring/applicationContext.xml")

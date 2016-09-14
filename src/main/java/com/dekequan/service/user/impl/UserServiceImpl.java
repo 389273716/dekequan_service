@@ -1,4 +1,4 @@
-package com.dekequan.service.impl;
+package com.dekequan.service.user.impl;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.dekequan.base.ResponseBase;
 import com.dekequan.base.ResponseRe;
-import com.dekequan.dao.UserDao;
+import com.dekequan.dao.user.UserDao;
 import com.dekequan.library.Json;
 import com.dekequan.library.MyDate;
 import com.dekequan.library.Print;
 import com.dekequan.library.SystemTokenUtil;
 import com.dekequan.library.UserUtil;
-import com.dekequan.orm.User;
-import com.dekequan.service.UserService;
+import com.dekequan.orm.user.User;
+import com.dekequan.service.user.UserService;
 import com.sun.corba.se.spi.ior.ObjectKey;
 
 /**
