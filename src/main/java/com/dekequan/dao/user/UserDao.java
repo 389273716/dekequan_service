@@ -2,6 +2,7 @@ package com.dekequan.dao.user;
 
 import java.util.Map;
 
+import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
 
 /**
@@ -47,5 +48,7 @@ public interface UserDao {
 	 * @param query
 	 */
 	public abstract void updateUser(Map<String, Object> query);
+
+	public abstract SimpleUser fetchSimpleUserById(Integer userId);
 	
 }

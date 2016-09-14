@@ -3,5 +3,6 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.dekequan.orm.user.User" alias="User" />
+        <typeAlias type="com.dekequan.orm.user.SimpleUser" alias="SimpleUser" />
     </typeAliases>
 </configuration>

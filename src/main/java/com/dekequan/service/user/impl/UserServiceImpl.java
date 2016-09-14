@@ -12,12 +12,11 @@ import com.dekequan.base.ResponseRe;
 import com.dekequan.dao.user.UserDao;
 import com.dekequan.library.Json;
 import com.dekequan.library.MyDate;
-import com.dekequan.library.Print;
 import com.dekequan.library.SystemTokenUtil;
 import com.dekequan.library.UserUtil;
+import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
 import com.dekequan.service.user.UserService;
-import com.sun.corba.se.spi.ior.ObjectKey;
 
 /**
  * <p>
@@ -218,6 +217,12 @@ public class UserServiceImpl implements UserService {
 		partResponse.setMsg(partMsg);
 		partResponse.setData(obj);
 		return partResponse;
+	}
+
+	@Override
+	public SimpleUser fetchSimpleUserById(Integer userId) {
+//		Print.print();
+		return userDaoImpl.fetchSimpleUserById(userId);
 	}
 
 }

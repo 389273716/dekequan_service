@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.dekequan.base.ResponseBase;
+import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
 
 /**
@@ -20,6 +21,13 @@ import com.dekequan.orm.user.User;
 @Service
 public interface UserService {
 
+	/**
+	 * 获取简单User
+	 * @param id
+	 * @return
+	 */
+	public abstract SimpleUser fetchSimpleUserById(Integer id);	
+	
 	/**
 	 * 用户id
 	 * 

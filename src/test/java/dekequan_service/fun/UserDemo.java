@@ -13,19 +13,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dekequan.base.ResponseBase;
 import com.dekequan.dao.user.UserDao;
+import com.dekequan.library.Json;
 import com.dekequan.library.Print;
 import com.dekequan.orm.user.User;
-import com.dekequan.service.user.UserService;;
+import com.dekequan.service.user.UserService;
+import com.fasterxml.jackson.databind.util.BeanUtil;;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:/com/dekequan/spring/applicationContext.xml")
+@ContextConfiguration(locations = {"classpath:/com/dekequan/spring/applicationContext.xml", "classpath:/com/dekequan/spring/dispatcher-servlet.xml"})
 public class UserDemo {
 
-//	@Resource
-//	private UserService userServiceImpl;
-	
 	@Autowired
-	private UserDao userDao;
+	private UserService userServiceImpl;
 	
 	/**
 	 * 保存用户
@@ -64,9 +63,7 @@ public class UserDemo {
 		Map<String, String> query = new HashMap<String, String>();
 		query.put("userName", userName);
 		query.put("password", password);
-//		User partUser = userDao.findUserByLogin();
-//		ResponseBase<Map<String, Object>> partResponse = userServiceImpl.constructResultLogin(partUser);
-		Print.print(userDao.findUserById(1));
+		Print.print(userServiceImpl.fetchSimpleUserById(1));
 	}
 	
 }
