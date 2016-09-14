@@ -2,6 +2,8 @@ package com.dekequan.service.user;
 
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.dekequan.base.ResponseBase;
 import com.dekequan.orm.user.User;
 
@@ -15,6 +17,7 @@ import com.dekequan.orm.user.User;
  * @date 2016年8月28日 上午1:38:33
  * @version 1.0
  */
+@Service
 public interface UserService {
 
 	/**

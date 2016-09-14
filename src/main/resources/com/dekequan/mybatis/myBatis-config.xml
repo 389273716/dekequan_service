@@ -2,6 +2,6 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="com.dekequan.orm.User" alias="User" />
+        <typeAlias type="com.dekequan.orm.user.User" alias="User" />
     </typeAliases>
 </configuration>
