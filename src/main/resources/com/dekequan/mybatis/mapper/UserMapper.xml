@@ -41,7 +41,7 @@
 		select * from dk_user where userId = #{userId}
 	</select>
 	
-		<!-- 根据id查询得到一个user对象 -->
+		<!-- 根据id查询得到一个simpleUser对象 -->
 	<select id="fetchSimpleUserById" parameterType="int" resultType="simpleUser">
 		select * from dk_user where userId = #{userId}
 	</select>

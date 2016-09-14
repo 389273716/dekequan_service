@@ -41,7 +41,7 @@
 		<!-- 自动扫描mapping.xml文件 -->
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:com/dekequan/mybatis/mapper/*.xml</value>
+				<value>classpath:com/dekequan/mybatis/mapper/*Mapper.xml</value>
 			</list>
 		</property>
 	</bean>
