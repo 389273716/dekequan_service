@@ -26,7 +26,6 @@ public class DataDemo {
 	@Test
 	public void dbTest() throws SQLException {
 		System.out.println(dataSource.getConnection());
-		Print.print(userService.querySingleUser(1));
 		Print.print(userService.fetchSimpleUserById(1));
 	}
 	

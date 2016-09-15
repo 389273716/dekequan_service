@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dekequan.dao.user.UserDao">
-    <resultMap type="User" id="user">
+    <resultMap id="user" type="com.dekequan.orm.user.User">
 		<id column="user_id" property="userId" jdbcType="INTEGER" />
 		<result column="user_name" property="userName" jdbcType="VARCHAR" />
 		<result column="password" property="password" jdbcType="VARCHAR" />
@@ -33,7 +33,7 @@
     <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型 
 		resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
 	<!-- 用户账号密码查询 -->
-	<select id="findUserByLogin" parameterType="java.util.Map" resultType="user">
+	<select id="findUserByLogin" parameterType="java.util.Map" resultMap="user">
 		select
 		<include refid="User_Column_List" />
 		from dk_user where user_name=#{userName,jdbcType=VARCHAR}
@@ -43,12 +43,12 @@
 	</select>
 		
 	<!-- 根据id查询得到一个user对象 -->
-	<select id="findUserById" parameterType="int" resultType="user">
+	<select id="findUserById" parameterType="int" resultMap="user">
 		select <include refid="User_Column_List" /> from dk_user where user_id = #{userId}
 	</select>
 	
 		<!-- 根据id查询得到一个simpleUser对象 -->
-	<select id="fetchSimpleUserById" parameterType="int" resultType="simpleUser">
+	<select id="fetchSimpleUserById" parameterType="int" resultMap="simpleUser">
 		select <include refid="User_Column_List" /> from dk_user where user_id = #{userId}
 	</select>
 	
