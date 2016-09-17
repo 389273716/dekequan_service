@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dekequan.dao.menu.MenuDao" >
+  <resultMap id="menu" type="Menu" >
+    <id column="menu_id" property="menuId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIME" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="tip" property="tip" jdbcType="VARCHAR" />
+    <result column="main_image" property="mainImage" jdbcType="VARCHAR" />
+    <result column="view_count" property="viewCount" jdbcType="INTEGER" />
+    <result column="user_collect_count" property="userCollectCount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    menu_id, create_time, title, tip, main_image, view_count, user_collect_count
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dk_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dk_menu
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dekequan.orm.menu.Menu" >
+    insert into dk_menu (menu_id, create_time, title, 
+      tip, main_image, view_count, 
+      user_collect_count)
+    values (#{menuId,jdbcType=INTEGER}, #{createTime,jdbcType=TIME}, #{title,jdbcType=VARCHAR}, 
+      #{tip,jdbcType=VARCHAR}, #{mainImage,jdbcType=VARCHAR}, #{viewCount,jdbcType=INTEGER}, 
+      #{userCollectCount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dekequan.orm.menu.Menu" >
+    insert into dk_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        menu_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="tip != null" >
+        tip,
+      </if>
+      <if test="mainImage != null" >
+        main_image,
+      </if>
+      <if test="viewCount != null" >
+        view_count,
+      </if>
+      <if test="userCollectCount != null" >
+        user_collect_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIME},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tip != null" >
+        #{tip,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null" >
+        #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null" >
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="userCollectCount != null" >
+        #{userCollectCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dekequan.orm.menu.Menu" >
+    update dk_menu
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIME},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="tip != null" >
+        tip = #{tip,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null" >
+        main_image = #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="userCollectCount != null" >
+        user_collect_count = #{userCollectCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dekequan.orm.menu.Menu" >
+    update dk_menu
+    set create_time = #{createTime,jdbcType=TIME},
+      title = #{title,jdbcType=VARCHAR},
+      tip = #{tip,jdbcType=VARCHAR},
+      main_image = #{mainImage,jdbcType=VARCHAR},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      user_collect_count = #{userCollectCount,jdbcType=INTEGER}
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </update>
+<!--    查询列表 -->
+  <select id="fetchList" >
+  	
+  </select>
+</mapper>
