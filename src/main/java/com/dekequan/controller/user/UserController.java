@@ -16,8 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dekequan.base.ResponseBase;
 import com.dekequan.base.ResponseRe;
-import com.dekequan.library.Json;
-import com.dekequan.library.UserUtil;
+import com.dekequan.library.utils.Json;
+import com.dekequan.library.utils.UserUtil;
 import com.dekequan.orm.user.User;
 import com.dekequan.service.user.UserService;
 

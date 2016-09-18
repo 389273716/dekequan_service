@@ -1,6 +1,6 @@
 package dekequan_service;
 
-import com.dekequan.library.Print;
+import com.dekequan.library.utils.Print;
 import com.dekequan.service.user.UserService;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.junit.Test;
