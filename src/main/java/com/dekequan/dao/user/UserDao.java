@@ -51,4 +51,6 @@ public interface UserDao {
 
 	public abstract SimpleUser fetchSimpleUserById(Integer userId);
 	
+	public abstract SimpleUser fetchSimpleUserByToken(String dkToken);
+	
 }

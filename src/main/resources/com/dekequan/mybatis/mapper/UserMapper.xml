@@ -51,6 +51,10 @@
 	<select id="fetchSimpleUserById" parameterType="int" resultMap="simpleUser">
 		select <include refid="User_Column_List" /> from dk_user where user_id = #{userId}
 	</select>
+<!-- 	根据token获取一个用户数据 -->
+	<select id="fetchSimpleUserByToken" parameterType="java.lang.String" resultMap="simpleUser">
+		select <include refid="User_Column_List"/> from dk_user where dk_token = #{dkToken}
+	</select>
 	
 	<!-- 新增 -->
 	<insert id="saveUser" parameterType="User">
