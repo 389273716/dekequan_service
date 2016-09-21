@@ -1,7 +1,9 @@
 package com.dekequan.service.user.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import com.dekequan.library.utils.Json;
 import com.dekequan.library.utils.MyDate;
 import com.dekequan.library.utils.SystemTokenUtil;
 import com.dekequan.library.utils.UserUtil;
+import com.dekequan.orm.community.Article;
+import com.dekequan.orm.menu.Menu;
 import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
 import com.dekequan.service.user.UserService;
@@ -223,6 +227,67 @@ public class UserServiceImpl implements UserService {
 	public SimpleUser fetchSimpleUserById(Integer userId) {
 //		Print.print();
 		return userDaoImpl.fetchSimpleUserById(userId);
+	}
+	
+	/**
+	 * 我的发布
+	 */
+	@Override
+	public SimpleUser myPublished(String dkToken) {
+		return userDaoImpl.fetchSimpleUserByToken(dkToken);
+	}
+	/**
+	 * 构建我的发布返回值
+	 */
+	@Override
+	public ResponseBase<Map<String, Object>> constructReturnMyPublished(
+			SimpleUser user, List<Menu> menus, List<Article> articles) {
+		ResponseBase<Map<String, Object>> partResponse = new ResponseBase<Map<String, Object>>();
+		partResponse.setMsg("SUCCESS");
+		partResponse.setRe(ResponseRe.RE_SUCCESS);
+		Map<String, Object> dataMap = new HashMap<String, Object>();
+		dataMap.put("img", user.getImg());
+		dataMap.put("nickname", user.getNickName());
+		dataMap.put("rankName", user.getRankName());
+//		dataMap.put("fansCount", user.get);
+		dataMap.put("userMenuCount", menus.size());
+		dataMap.put("userArticalCount", articles.size());
+		List<Map<String, Object>> menuDatas = new ArrayList<Map<String,Object>>();
+		for(Menu menu : menus){
+			Map<String, Object> menuData = new HashMap<String, Object>();
+			menuData.put("menuId", menu.getMainImage());
+			menuData.put("title", menu.getTitle());
+			menuData.put("mainImage", menu.getMainImage());
+			menuData.put("viewCount", menu.getViewCount());
+//			menuData.put("userCollectCount", );
+			menuDatas.add(menuData);
+		}
+		dataMap.put("menus", menuDatas);
+		List<Map<String, Object>> articleDatas = new ArrayList<Map<String,Object>>();
+		for(Article article : articles){
+			Map<String, Object> articleData = new HashMap<String, Object>();
+			articleData.put("aticleId", article.getAticleId());
+			articleData.put("title", article.getTitle());
+			articleData.put("mainImage", article.getMainImage());
+			articleData.put("createTime", article.getCreateTime());
+//			articleData.put("followCount", article.get);
+//			articleData.put("commentCount", article.getc);
+			articleData.put("likeCount", article.getLikeCount());
+			articleDatas.add(articleData);
+		}
+		dataMap.put("articals", articleDatas);
+		return partResponse;
+	}
+
+	@Override
+	public ResponseBase<Map<String, Object>> constructFindNoInfoError() {
+		ResponseBase<Map<String, Object>> partResponse = new ResponseBase<Map<String, Object>>();
+		Integer partRe = ResponseRe.RE_FAILURE;
+		String partMsg = "FIND_NO_DATA_ERROR";
+		partResponse.setRe(partRe);
+		partResponse.setMsg(partMsg);
+		partResponse.setData(new HashMap<String, Object>());
+		return partResponse;
 	}
 
 }

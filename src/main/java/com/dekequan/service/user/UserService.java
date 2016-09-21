@@ -1,10 +1,13 @@
 package com.dekequan.service.user;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.dekequan.base.ResponseBase;
+import com.dekequan.orm.community.Article;
+import com.dekequan.orm.menu.Menu;
 import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
 
@@ -86,8 +89,7 @@ public interface UserService {
 	 * @param password
 	 * @return
 	 */
-	public abstract User register(String userName, String password);
-	
+	public abstract User register(String userName, String password);	
 	/**
 	 * 构建注册
 	 * @param dkToken
@@ -112,5 +114,19 @@ public interface UserService {
 	 * @return
 	 */
 	public abstract ResponseBase<Map<String, Object>> constructReturnUserInfo();
-	
+	/**
+	 * 我的发布功能
+	 * @return
+	 */
+	public abstract SimpleUser myPublished(String dkToken);
+	/**
+	 * 构建我的发布返回值结构
+	 * @return
+	 */
+	public abstract ResponseBase<Map<String, Object>> constructReturnMyPublished(SimpleUser user, List<Menu> menus, List<Article> articles);
+	/**
+	 * 未查询到相关数据异常
+	 * @return
+	 */
+	public abstract ResponseBase<Map<String, Object>> constructFindNoInfoError();
 }

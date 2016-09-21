@@ -1,5 +1,6 @@
 package dekequan_service;
 
+import com.dekequan.dao.user.UserDaoIm;
 import com.dekequan.library.utils.Print;
 import com.dekequan.service.user.UserService;
 import org.apache.commons.dbcp.BasicDataSource;
@@ -25,8 +26,13 @@ public class DataDemo {
 	//数据库连接测试
 	@Test
 	public void dbTest() throws SQLException {
-		System.out.println(dataSource.getConnection());
-		Print.print(userService.fetchSimpleUserById(1));
+//		System.out.println(dataSource.getConnection());
+//		Print.print(userService.fetchSimpleUserById(1));
+//		ApplicationContext context = new ClassPathXmlApplicationContext("com/dekequan/spring/applicationContext.xml");
+//		SqlSessionTemplate sqlSessionTemplate = (SqlSessionTemplate) context.getBean("sqlSessionTemplate");
+		UserDaoIm userDaoIm = new UserDaoIm();
+//		Print.print(userDaoIm.get(QueryHelper.where("userId", QueryHelper.EQ, 1)));
+		Print.print(userDaoIm.get(1));
 	}
 	
 }
