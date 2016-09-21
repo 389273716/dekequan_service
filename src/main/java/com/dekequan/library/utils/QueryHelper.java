@@ -5,6 +5,7 @@ import com.dekequan.library.core.WherePrams;
 import java.io.Serializable;
 
 /**
+ * 查询工具条件类
  * @Author 佘俊
  * @Date 2016/9/18 22:31
  * @email shejun1123@163.com
