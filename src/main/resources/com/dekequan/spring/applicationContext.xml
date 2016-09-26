@@ -46,6 +46,11 @@
 		</property>
 	</bean>
 
+	<!-- 配置SessionTemplate，已封装了繁琐的数据操作-->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+
 	<!-- 配置事务管理器,管理数据源事务处理 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -71,8 +76,7 @@
 	</aop:config>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.dekequan.dao" />
+		<property name="basePackage" value="com.dekequan" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
-	
 </beans>

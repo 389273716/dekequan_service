@@ -1,9 +1,9 @@
 package com.dekequan.dao.user;
 
-import java.util.Map;
-
 import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
+
+import java.util.Map;
 
 /**
  * 
@@ -19,7 +19,7 @@ public interface UserDao {
 
 	/**
 	 * id 查询数据
-	 * @param id
+	 * @param userId
 	 * @return
 	 */
 	public abstract User findUserById(Integer userId);
@@ -50,5 +50,7 @@ public interface UserDao {
 	public abstract void updateUser(Map<String, Object> query);
 
 	public abstract SimpleUser fetchSimpleUserById(Integer userId);
+	
+	public abstract SimpleUser fetchSimpleUserByToken(String dkToken);
 	
 }

@@ -1,6 +1,6 @@
 package com.dekequan.controller.user;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +18,16 @@ import com.dekequan.base.ResponseBase;
 import com.dekequan.base.ResponseRe;
 import com.dekequan.library.utils.Json;
 import com.dekequan.library.utils.UserUtil;
+import com.dekequan.orm.community.Article;
+import com.dekequan.orm.menu.Menu;
+import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
+import com.dekequan.service.community.ArticleService;
+import com.dekequan.service.menu.MenuService;
 import com.dekequan.service.user.UserService;
 
 /**
- * @author qzr
+ * @author qzr + ttm + sj
  *
  */
 @SuppressWarnings("unchecked")
@@ -32,30 +37,11 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
-	private ModelAndView view = new ModelAndView();;
-
-	/**
-	 * 注册接口
-	 * 
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value="/register", method=RequestMethod.POST)
-	@ResponseBody
-	public String register(@RequestParam(value="request") String request) {
-		HashMap<String, Object> reqMap = (HashMap<String, Object>) Json.fromJson(request, HashMap.class);
-		String userName =null ==  reqMap.get("userName") ? null : (String) reqMap.get("userName");
-		String password = null == reqMap.get("password") ? null : (String) reqMap.get("password");
-		String code = null == reqMap.get("code") ? null :reqMap.get("code").toString();
-		// 校验验证码
-		if (!"success".equals(UserUtil.checkCode(code))) {
-			return Json.toJson(userService.constructCheckCodeError());
-		}
-		User user = userService.register(userName, password);
-		
-		return Json.toJson(userService.constructResultRegister(user));
-	}
+	@Autowired
+	private MenuService menuService;
+	@Autowired
+	private ArticleService articleService;
+	private ModelAndView view = new ModelAndView();
 	
 	/**
 	 * 用户登录
@@ -76,6 +62,27 @@ public class UserController {
 		}
 		return Json.toJson(partResponseBase);
 	} 
+	
+	/**
+	 * 注册接口
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/register", method=RequestMethod.POST)
+	@ResponseBody
+	public String register(@RequestBody User user, @RequestHeader HttpHeaders header) {
+		String userName = user.getUserName();
+		String password = user.getPassword();
+		String code = "test";
+		// 校验验证码
+		if (!"success".equals(UserUtil.checkCode(code))) {
+			return Json.toJson(userService.constructCheckCodeError());
+		}
+		User userNew = userService.register(userName, password);
+		
+		return Json.toJson(userService.constructResultRegister(userNew));
+	}
 	
 	/**
 	 * 注销
@@ -120,6 +127,24 @@ public class UserController {
 			return Json.toJson(userService.constructCheckCodeError());
 		}
 		return Json.toJson(partResponseBase);
+	}
+	
+	@RequestMapping(value="myPublished", method=RequestMethod.POST)
+	@ResponseBody
+	public String myPublished(@RequestBody Map<String, Object> info, @RequestHeader HttpHeaders header){
+		String dkToken = null == info.get("token") ? "" : info.get("token").toString();
+		String dateTime = null == info.get("dateTime") ? "" : info.get("dateTime").toString();
+		int pageNumber = null == info.get("pageNumber") ? 1 : Integer.parseInt(info.get("pageNumber").toString());
+		int pageSize = null == info.get("pageSize") ? 1 : Integer.parseInt(info.get("pageSize").toString());
+		ResponseBase<Map<String, Object>> response = new ResponseBase<Map<String,Object>>();
+		SimpleUser currentUser = userService.myPublished(dkToken);
+		if(null == currentUser){
+			return Json.toJson(userService.constructFindNoInfoError());
+		}
+		List<Article> articles = articleService.fetchArticleList(pageNumber, pageSize);
+		List<Menu> menus = menuService.fetchMenuList(pageSize, pageNumber);
+		
+		return Json.toJson(userService.constructReturnMyPublished(currentUser, menus, articles));
 	}
 	
 	/**
