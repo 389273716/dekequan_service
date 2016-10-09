@@ -5,4 +5,5 @@ import com.dekequan.orm.smart.Demo;
 
 public interface DemoDao extends AbstractDao<Demo> {
 
+	
 }

@@ -14,6 +14,7 @@ import com.dekequan.orm.menu.Menu;
  */
 public interface MenuDao extends AbstractDao<Menu> {
 	
+	
     int deleteByPrimaryKey(Integer menuId);
 
     int insert(Menu record);

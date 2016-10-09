@@ -5,6 +5,7 @@ import com.dekequan.service.base.BaseService;
 
 public interface DemoService extends BaseService<Demo> {
 
+	
 	public Demo findDemoById(Integer demoId);
 	
 	public int saveDemo(Demo demo);

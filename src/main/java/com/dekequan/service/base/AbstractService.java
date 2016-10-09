@@ -8,6 +8,7 @@ import tk.mybatis.mapper.common.Mapper;
 
 public abstract class AbstractService<T> implements BaseService<T> {
 
+	
 	@Autowired
 	private Mapper<T> mMapper;
 	

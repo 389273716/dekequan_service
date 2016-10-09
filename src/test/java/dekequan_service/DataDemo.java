@@ -11,6 +11,7 @@ import com.dekequan.service.smart.DemoService;
 
 public class DataDemo extends BaseDemo {
 
+	
 	@Autowired
 	private DemoService demoServiceImpl;
 	

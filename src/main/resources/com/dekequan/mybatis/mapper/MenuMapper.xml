@@ -10,4 +10,5 @@
     <result column="view_count" property="viewCount" jdbcType="INTEGER" />
     <result column="user_collect_count" property="userCollectCount" jdbcType="INTEGER" />
   </resultMap>
+  
 </mapper>

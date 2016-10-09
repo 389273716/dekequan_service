@@ -18,6 +18,7 @@ import java.util.Map;
  */
 public interface UserDao extends AbstractDao<User> {
 
+	
 	/**
 	 * id 查询数据
 	 * @param userId

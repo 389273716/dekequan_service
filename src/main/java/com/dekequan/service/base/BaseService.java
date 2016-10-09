@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface BaseService<T> {
 
+	
 	public T findById(Object keyId);
 	
 	public int save(T entity);

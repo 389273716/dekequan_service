@@ -9,6 +9,7 @@ import com.dekequan.service.smart.DemoService;
 @Service("demoServiceImpl")
 public class DemoServiceImpl extends AbstractService<Demo> implements DemoService {
 
+	
 	public Demo findDemoById(Integer demoId) {
 		return findById(demoId);
 	}

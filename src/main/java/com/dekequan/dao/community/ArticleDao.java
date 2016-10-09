@@ -13,7 +13,8 @@ import com.dekequan.orm.community.Article;
  * 圈子（个人动态）数据层接口
  */
 public interface ArticleDao extends AbstractDao<Article> {
-    int deleteByPrimaryKey(Integer aticleId);
+    
+	int deleteByPrimaryKey(Integer aticleId);
 
     int insert(Article record);
 

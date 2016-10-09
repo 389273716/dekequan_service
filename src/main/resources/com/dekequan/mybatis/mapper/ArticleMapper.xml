@@ -16,4 +16,5 @@
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="likes" property="likes" jdbcType="LONGVARCHAR" />
   </resultMap>
+  
 </mapper>
