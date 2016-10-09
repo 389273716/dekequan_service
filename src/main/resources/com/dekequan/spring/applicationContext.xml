@@ -75,11 +75,12 @@
 	<!-- 配置切面织入的范围,把事务边界定在service层 -->
 	<aop:config>
 		<aop:advisor advice-ref="advice"
-			pointcut="execution(* com.dekequan.dao.*.*(..))" />
+			pointcut="execution(* com.dekequan.service.*.*(..))" />
 	</aop:config>
 
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.dekequan" />
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.dekequan.dao" />
+		<property name="markerInterface" value="com.dekequan.library.dao.AbstractDao"/>
 	</bean>
+	
 </beans>
