@@ -5,14 +5,13 @@ package com.dekequan.dao.menu;
 
 import java.util.List;
 
-import com.dekequan.library.dao.AbstractDao;
 import com.dekequan.orm.menu.Menu;
 
 /**
  * @author qzr
  *  菜单数据层接口
  */
-public interface MenuDao extends AbstractDao<Menu> {
+public interface MenuDao {
 	
     int deleteByPrimaryKey(Integer menuId);
 

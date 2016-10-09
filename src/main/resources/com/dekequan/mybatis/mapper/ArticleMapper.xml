@@ -16,4 +16,196 @@
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="likes" property="likes" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <sql id="Base_Column_List" >
+    aticle_id, create_time, title, main_image, type, creator, view_count, like_count, 
+    level, collect_count, is_show
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, likes
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from dk_article
+    where aticle_id = #{aticleId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dk_article
+    where aticle_id = #{aticleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dekequan.orm.community.Article" >
+    insert into dk_article (aticle_id, create_time, title, 
+      main_image, type, creator, 
+      view_count, like_count, level, 
+      collect_count, is_show, content, 
+      likes)
+    values (#{aticleId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
+      #{mainImage,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{creator,jdbcType=INTEGER}, 
+      #{viewCount,jdbcType=INTEGER}, #{likeCount,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
+      #{collectCount,jdbcType=INTEGER}, #{isShow,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}, 
+      #{likes,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dekequan.orm.community.Article" >
+    insert into dk_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aticleId != null" >
+        aticle_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="mainImage != null" >
+        main_image,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="viewCount != null" >
+        view_count,
+      </if>
+      <if test="likeCount != null" >
+        like_count,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="collectCount != null" >
+        collect_count,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="likes != null" >
+        likes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aticleId != null" >
+        #{aticleId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null" >
+        #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="viewCount != null" >
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeCount != null" >
+        #{likeCount,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="collectCount != null" >
+        #{collectCount,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="likes != null" >
+        #{likes,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dekequan.orm.community.Article" >
+    update dk_article
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="mainImage != null" >
+        main_image = #{mainImage,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="likeCount != null" >
+        like_count = #{likeCount,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="collectCount != null" >
+        collect_count = #{collectCount,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="likes != null" >
+        likes = #{likes,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where aticle_id = #{aticleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dekequan.orm.community.Article" >
+    update dk_article
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      main_image = #{mainImage,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=INTEGER},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      collect_count = #{collectCount,jdbcType=INTEGER},
+      is_show = #{isShow,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR},
+      likes = #{likes,jdbcType=LONGVARCHAR}
+    where aticle_id = #{aticleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dekequan.orm.community.Article" >
+    update dk_article
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      main_image = #{mainImage,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=INTEGER},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      like_count = #{likeCount,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      collect_count = #{collectCount,jdbcType=INTEGER},
+      is_show = #{isShow,jdbcType=INTEGER}
+    where aticle_id = #{aticleId,jdbcType=INTEGER}
+  </update>
+<!--   分页查询圈子结果集 -->
+  <select id="fetchList">
+  	
+  </select>
 </mapper>

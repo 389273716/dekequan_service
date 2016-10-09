@@ -5,14 +5,13 @@ package com.dekequan.dao.community;
 
 import java.util.List;
 
-import com.dekequan.library.dao.AbstractDao;
 import com.dekequan.orm.community.Article;
 
 /**
  * @author qzr
  * 圈子（个人动态）数据层接口
  */
-public interface ArticleDao extends AbstractDao<Article> {
+public interface ArticleDao {
     int deleteByPrimaryKey(Integer aticleId);
 
     int insert(Article record);

@@ -30,6 +30,7 @@ import com.dekequan.service.user.UserService;
  * @author qzr + ttm + sj
  *
  */
+@SuppressWarnings("unchecked")
 @Controller
 @RequestMapping(value = "/v1/user")
 public class UserController {
