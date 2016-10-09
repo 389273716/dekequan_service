@@ -11,7 +11,6 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-    
     <!-- 扫描包 -->
 	<context:component-scan base-package="com.dekequan.service" />
     
@@ -48,6 +47,18 @@
 				<value>classpath:com/dekequan/mybatis/mapper/*Mapper.xml</value>
 			</list>
 		</property>
+		<property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <!-- 这里的几个配置主要演示如何使用，如果不理解，一定要去掉下面的配置 -->
+                    <property name="properties">
+                        <value>
+                            dialect=mysql
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
 	</bean>
 
 	<!-- 配置SessionTemplate，已封装了繁琐的数据操作-->

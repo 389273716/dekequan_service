@@ -1,10 +1,16 @@
 package com.dekequan.service.smart.impl;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.dekequan.orm.smart.Demo;
 import com.dekequan.service.base.AbstractService;
 import com.dekequan.service.smart.DemoService;
+import com.github.pagehelper.PageHelper;
+
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 @Service("demoServiceImpl")
 public class DemoServiceImpl extends AbstractService<Demo> implements DemoService {
@@ -23,6 +29,13 @@ public class DemoServiceImpl extends AbstractService<Demo> implements DemoServic
 
 	public int deleteDemoById(Integer demoId) {
 		return deleteById(demoId);
+	}
+
+	public List<Demo> findDemo(int page, int rows) {
+		Example partExample = new Example(Demo.class);
+		//分页查询
+		PageHelper.startPage(page, rows);
+		return findByQuery(partExample);
 	}
 
 }
