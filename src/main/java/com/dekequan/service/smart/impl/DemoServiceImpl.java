@@ -10,8 +10,13 @@ import com.dekequan.service.smart.DemoService;
 import com.github.pagehelper.PageHelper;
 
 import tk.mybatis.mapper.entity.Example;
-import tk.mybatis.mapper.entity.Example.Criteria;
 
+/**
+ * 
+ * @author 唐太明
+ * @date 2016年10月10日 上午1:26:14
+ * @version 1.0
+ */
 @Service("demoServiceImpl")
 public class DemoServiceImpl extends AbstractService<Demo> implements DemoService {
 
@@ -33,7 +38,7 @@ public class DemoServiceImpl extends AbstractService<Demo> implements DemoServic
 
 	public List<Demo> findDemo(int page, int rows) {
 		Example partExample = new Example(Demo.class);
-		//分页查询
+		// 分页查询
 		PageHelper.startPage(page, rows);
 		return findByQuery(partExample);
 	}

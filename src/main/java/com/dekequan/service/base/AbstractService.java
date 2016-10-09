@@ -6,6 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import tk.mybatis.mapper.common.Mapper;
 
+/**
+ * 
+ * <p>介绍 service 常用操作基类</p>
+ * @author 唐太明
+ * @date 2016年10月10日 上午1:23:58
+ * @version 1.0
+ * @param <T>
+ */
 public abstract class AbstractService<T> implements BaseService<T> {
 
 	@Autowired

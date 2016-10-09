@@ -17,6 +17,12 @@ import com.dekequan.library.utils.Print;
 import com.dekequan.orm.smart.Demo;
 import com.dekequan.service.smart.DemoService;
 
+/**
+ * 
+ * @author 唐太明
+ * @date 2016年10月10日 上午1:26:50
+ * @version 1.0
+ */
 @Controller
 @RequestMapping(value = "/v1/demo")
 public class DemoController {
