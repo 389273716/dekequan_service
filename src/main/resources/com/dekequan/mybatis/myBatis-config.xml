@@ -6,5 +6,6 @@
         <typeAlias type="com.dekequan.orm.user.SimpleUser" alias="SimpleUser" />
         <typeAlias type="com.dekequan.orm.menu.Menu" alias="Menu"/>
         <typeAlias type="com.dekequan.orm.community.Article" alias="Article"/>
+        <typeAlias type="com.dekequan.orm.smart.Demo" alias="Demo"/>
     </typeAliases>
 </configuration>
