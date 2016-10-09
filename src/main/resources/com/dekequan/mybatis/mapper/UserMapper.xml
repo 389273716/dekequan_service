@@ -26,6 +26,7 @@
         <result property="sex" column="sex" />
     </resultMap>
 
+<<<<<<< HEAD
 	<sql id="User_Column_List" >
 		user_id, user_name, password, nick_name, rank, level, img, create_time, access_token,
 		dk_token, expire_time, sex
@@ -79,4 +80,7 @@
 	<update id="updateUser" parameterType="Map">
 	    update dk_user set nick_name = #{nickName}, sex = #{sex}, img = #{img} where userId = #{id}
 	</update>
+=======
+    
+>>>>>>> temp1
 </mapper>

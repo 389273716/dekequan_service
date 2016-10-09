@@ -17,6 +17,7 @@ import java.util.Map;
  */
 public interface UserDao {
 
+	
 	/**
 	 * id 查询数据
 	 * @param userId

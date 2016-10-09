@@ -1,11 +1,11 @@
 package com.dekequan.dao.user.impl;
 
+import java.util.Map;
+
 import com.dekequan.dao.user.UserDao;
 import com.dekequan.library.dao.IBaseDaoImpl;
 import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
-
-import java.util.Map;
 
 /**
  * @Author 佘俊
@@ -47,4 +47,5 @@ public class UserDaoImpl extends IBaseDaoImpl<User, Integer> implements UserDao 
     public SimpleUser fetchSimpleUserByToken(String dkToken) {
         return null;
     }
+
 }
