@@ -34,7 +34,7 @@ public class DemoController {
 	@ResponseBody
 	public String findById() {
 		ResponseBase<Map<String, Object>> partResponseBase = new ResponseBase<Map<String, Object>>();
-		Demo partDemo = demoServiceImpl.findById(1);
+		Demo partDemo = demoServiceImpl.findDemoById(1);
 		Print.print(partDemo);
 		return Json.toJson(partResponseBase);
 	}
@@ -73,7 +73,7 @@ public class DemoController {
 	public String delete(@PathVariable(value = "id") Integer id) {
 		ResponseBase<Map<String, Object>> partResponseBase = new ResponseBase<Map<String, Object>>();
 		System.out.println("ttm | 传入数据 ---> " + id);
-		Demo partDemo = demoServiceImpl.findById(id);
+		Demo partDemo = demoServiceImpl.findDemoById(id);
 		System.out.println("ttm | 查询数据 ---> " + Json.toJson(partDemo));
 		if (partDemo != null) {
 			int partId = demoServiceImpl.deleteDemoById(partDemo.getDemoId());
