@@ -127,6 +127,13 @@
 			<artifactId>mapper</artifactId>
 			<version>3.3.9</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.1.6</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>dekequan_service</finalName>

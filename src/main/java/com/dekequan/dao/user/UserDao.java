@@ -1,6 +1,5 @@
 package com.dekequan.dao.user;
 
-import com.dekequan.library.dao.AbstractDao;
 import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
 
@@ -16,7 +15,7 @@ import java.util.Map;
  * @date 2016年8月28日 上午12:37:54
  * @version 1.0
  */
-public interface UserDao extends AbstractDao<User> {
+public interface UserDao {
 
 	/**
 	 * id 查询数据
