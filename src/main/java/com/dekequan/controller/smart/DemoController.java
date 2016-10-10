@@ -30,11 +30,12 @@ public class DemoController {
 	@Autowired
 	private DemoService demoServiceImpl;
 
-	@RequestMapping(value = "/findById", method = RequestMethod.GET)
+	@RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public String findById() {
+	public String findById(@PathVariable(value = "id") Integer id) {
 		ResponseBase<Map<String, Object>> partResponseBase = new ResponseBase<Map<String, Object>>();
-		Demo partDemo = demoServiceImpl.findDemoById(1);
+		System.out.println("ttm | 获取id ---> " + id);
+		Demo partDemo = demoServiceImpl.findDemoById(id);
 		Print.print(partDemo);
 		return Json.toJson(partResponseBase);
 	}

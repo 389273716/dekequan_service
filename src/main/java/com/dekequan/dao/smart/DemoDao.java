@@ -11,4 +11,6 @@ import com.dekequan.orm.smart.Demo;
  */
 public interface DemoDao extends AbstractDao<Demo> {
 
+	public Demo findDemoDaoById(Integer demoId);
+	
 }

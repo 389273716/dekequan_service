@@ -2,8 +2,10 @@ package com.dekequan.service.smart.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dekequan.dao.smart.DemoDao;
 import com.dekequan.orm.smart.Demo;
 import com.dekequan.service.base.AbstractService;
 import com.dekequan.service.smart.DemoService;
@@ -20,8 +22,11 @@ import tk.mybatis.mapper.entity.Example;
 @Service("demoServiceImpl")
 public class DemoServiceImpl extends AbstractService<Demo> implements DemoService {
 
+	@Autowired
+	private DemoDao demoDaoImpl;
+	
 	public Demo findDemoById(Integer demoId) {
-		return findById(demoId);
+		return demoDaoImpl.findDemoDaoById(demoId);
 	}
 
 	public int saveDemo(Demo demo) {
