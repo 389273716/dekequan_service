@@ -1,14 +1,12 @@
 package com.dekequan.orm.user;
 
-import com.dekequan.library.core.Po;
-
 /**
  * <p>用户实体</p>
  * @author TTM
  * @date 2016年8月17日 下午11:40:02
  * @version 1.0
  */
-public class User extends Po {
+public class User {
 
 	private Integer userId;				
 	

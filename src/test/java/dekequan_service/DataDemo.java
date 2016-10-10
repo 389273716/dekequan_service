@@ -16,7 +16,7 @@ public class DataDemo extends BaseDemo {
 	
 	@Test
 	public void dbTest() throws SQLException {
-		Demo partDemo = demoServiceImpl.findById(1);
+		Demo partDemo = demoServiceImpl.findDemoById(1);
 		Print.print(partDemo);
 	}
 	
