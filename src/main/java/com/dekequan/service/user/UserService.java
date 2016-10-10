@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-import com.dekequan.base.ResponseBase;
+import com.dekequan.library.response.ResponseBase;
 import com.dekequan.orm.community.Article;
 import com.dekequan.orm.menu.Menu;
 import com.dekequan.orm.user.SimpleUser;

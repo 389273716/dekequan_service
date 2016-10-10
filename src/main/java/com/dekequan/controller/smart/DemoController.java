@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dekequan.base.ResponseBase;
+import com.dekequan.library.response.ResponseBase;
 import com.dekequan.library.utils.Json;
 import com.dekequan.library.utils.Print;
 import com.dekequan.orm.smart.Demo;

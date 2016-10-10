@@ -9,9 +9,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dekequan.base.ResponseBase;
-import com.dekequan.base.ResponseRe;
 import com.dekequan.dao.user.UserDao;
+import com.dekequan.library.response.ResponseBase;
+import com.dekequan.library.response.ResponseRe;
 import com.dekequan.library.utils.Json;
 import com.dekequan.library.utils.MyDate;
 import com.dekequan.library.utils.SystemTokenUtil;

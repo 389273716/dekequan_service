@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dekequan.base.ResponseBase;
-import com.dekequan.base.ResponseRe;
+import com.dekequan.library.response.ResponseBase;
+import com.dekequan.library.response.ResponseRe;
 import com.dekequan.library.utils.Json;
 import com.dekequan.library.utils.UserUtil;
 import com.dekequan.orm.community.Article;

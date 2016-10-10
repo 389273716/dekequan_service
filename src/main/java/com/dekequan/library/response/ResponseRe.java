@@ -1,4 +1,4 @@
-package com.dekequan.base;
+package com.dekequan.library.response;
 /**
  * 
  * <p>状态码</p>

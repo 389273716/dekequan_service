@@ -1,4 +1,4 @@
-package com.dekequan.base;
+package com.dekequan.library.response;
 
 /**
  * <p>返回结果基类</p>
