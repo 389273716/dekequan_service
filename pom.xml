@@ -134,10 +134,18 @@
 			<version>4.1.6</version>
 		</dependency>
 
+		<!-- httpClient 请求 -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.3.6</version>
+		</dependency>
+
+		<!-- 七牛 java sdk -->
+		<dependency>
+			<groupId>com.qiniu</groupId>
+			<artifactId>qiniu-java-sdk</artifactId>
+			<version>7.1.3</version>
 		</dependency>
 
 	</dependencies>

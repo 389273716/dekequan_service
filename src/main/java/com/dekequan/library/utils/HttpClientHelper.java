@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -36,10 +37,8 @@ public class HttpClientHelper {
 
 	private static CloseableHttpClient httpClient;
 
-	// 懒汉式单例
 	private static HttpClientHelper instance = new HttpClientHelper();
 
-	// 私有构造函数，单例
 	private HttpClientHelper() {
 		httpClient = getCloseableHttpClient();
 	}
@@ -162,12 +161,17 @@ public class HttpClientHelper {
 			charset = (charset == null ? CHARSET_UTF8 : charset);
 			formEntity = new UrlEncodedFormEntity(params, charset);
 			post = new HttpPost(url);
-
+			post.setHeader("Content-Type", "application/x-www-form-urlencoded");
+			post.setHeader("Accept", "application/json;charset=utf-8");
+			
 			System.out.println("ttm | ~~~~~~~~~~~~~~~~~~~~~~~request:" + url);
 			System.out.println("ttm | ~~~~~~~~~~~~~~~~~~~~~~~requestJson:" + Json.toJson(paramsMap));
 			post.setEntity(formEntity);
 			response = httpClient.execute(post);
-			res = EntityUtils.toString(response.getEntity());
+			HttpEntity entity = response.getEntity();
+			if (entity != null) {
+				res = EntityUtils.toString(entity);
+			}
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e) {

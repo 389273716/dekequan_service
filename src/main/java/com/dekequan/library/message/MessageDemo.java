@@ -15,7 +15,7 @@ import com.dekequan.library.utils.HttpClientHelper;
  */
 public class MessageDemo {
 	private static final String YUN_PIAN_API_KEY  = "50b14e5d476041cc84b574e3377e4ac7";
-	private static final String YUN_PIAN_URL = "https://sms.yunpian.com/v2/sms/single_send.js";
+	private static final String YUN_PIAN_URL = "https://sms.yunpian.com/v2/sms/single_send.json";
 	/**
 	 * @param args
 	 */
