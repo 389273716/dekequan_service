@@ -45,4 +45,6 @@
 	<mvc:resources location="/font/" mapping="/font/**" />
 	<mvc:resources location="/css/" mapping="/css/**" />
 
+	<bean id="exceptionHandler" class="com.dekequan.library.exception.DefaultExceptionHandler"></bean>
+	
 </beans>

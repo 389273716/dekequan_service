@@ -18,7 +18,7 @@ import com.dekequan.service.community.ArticleService;
  */
 
 @Service
-public class ActicleServiceImpl implements ArticleService{
+public class ActicleServiceImpl implements ArticleService {
 	@Autowired
 	ArticleDao articleDaoImpl;
 	

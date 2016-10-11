@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dekequan.library.exception.DefaultExceptionHandler;
 import com.dekequan.library.response.ResponseBase;
 import com.dekequan.library.utils.Json;
 import com.dekequan.library.utils.Print;
@@ -32,10 +33,13 @@ public class DemoController {
 
 	@RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public String findById(@PathVariable(value = "id") Integer id) {
+	public String findById(@PathVariable(value = "id") Integer id) throws Exception {
 		ResponseBase<Map<String, Object>> partResponseBase = new ResponseBase<Map<String, Object>>();
 		System.out.println("ttm | 获取id ---> " + id);
 		Demo partDemo = demoServiceImpl.findDemoById(id);
+		if (partDemo == null) {
+			throw new Exception("异常...");
+		}
 		Print.print(partDemo);
 		return Json.toJson(partResponseBase);
 	}
