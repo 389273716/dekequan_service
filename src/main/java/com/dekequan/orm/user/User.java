@@ -1,13 +1,20 @@
 package com.dekequan.orm.user;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * <p>用户实体</p>
  * @author TTM
  * @date 2016年8月17日 下午11:40:02
  * @version 1.0
  */
+@Table(name = "dk_user")
 public class User {
 
+	@Id
+	@Column(name = "user_id")
 	private Integer userId;				
 	
 	private String userName;			//用户名

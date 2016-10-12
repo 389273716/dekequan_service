@@ -6,21 +6,30 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.dekequan.dao.user.UserDao;
 import com.dekequan.library.response.ResponseBase;
 import com.dekequan.library.response.ResponseRe;
 import com.dekequan.library.utils.Json;
 import com.dekequan.library.utils.MyDate;
+import com.dekequan.library.utils.Print;
 import com.dekequan.library.utils.SystemTokenUtil;
 import com.dekequan.library.utils.UserUtil;
 import com.dekequan.orm.community.Article;
 import com.dekequan.orm.menu.Menu;
 import com.dekequan.orm.user.SimpleUser;
 import com.dekequan.orm.user.User;
+import com.dekequan.service.base.AbstractService;
 import com.dekequan.service.user.UserService;
+
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 /**
  * <p>
@@ -30,17 +39,17 @@ import com.dekequan.service.user.UserService;
  * @version 1.0
  */
 
-@Service
-public class UserServiceImpl implements UserService {
+@Service("userServiceImpl")
+public class UserServiceImpl extends AbstractService<User> implements UserService {
 	
 	@Autowired
 	private UserDao userDaoImpl;
 	
 	public User querySingleUser(Integer id) {
-		return userDaoImpl.findUserById(id);
+		return userDaoImpl.selectByPrimaryKey(id);
 	}
 	
-	public boolean save(User user) {
+	public boolean saveUser(User user) {
 		userDaoImpl.saveUser(user);
 		return true;
 	}
@@ -76,11 +85,21 @@ public class UserServiceImpl implements UserService {
 		Map<String, String> partQuery = new HashMap<String, String>();
 		partQuery.put("userName", userName);
 		partQuery.put("password", password);
-		User partUser = userDaoImpl.findUserByLogin(partQuery);
-		return partUser;
+		
+		//获取查询对象
+		Example partExample = new Example(User.class);
+		Criteria partCir = partExample.createCriteria();
+		partCir.andEqualTo("userName", userName);
+		partCir.andEqualTo("password", password);
+		System.out.println("ttm | criteria json --->" + Json.toJson(partCir));
+		List<User> partUserList = userDaoImpl.selectByExample(partExample);
+		if (!CollectionUtils.isEmpty(partUserList)) {
+			System.out.println("ttm | user --->" + Json.toJson(partUserList));
+			return partUserList.get(0);
+		}
+		return null;
 	}
 	
-	@Override
 	public boolean logout(Integer userId) {
 		User partUser = querySingleUser(userId);
 		if (partUser == null) {
@@ -88,28 +107,58 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		MyDate partMyDate = new MyDate();
-		Map<String, String> partQuery = new HashMap<String, String>();
-		partQuery.put("userId", userId.toString());
-		partQuery.put("expireTime", partMyDate.getCurrentDateTime());
-		userDaoImpl.updateUserExpireTime(partQuery);
-		return true;
+		Example partExample = new Example(User.class);
+		Criteria partCri = partExample.createCriteria();
+		partCri.andEqualTo("userId", userId);
+		User partUpdate = new User();
+		partUpdate.setExpireTime(partMyDate.getCurrentDateTime());
+		
+		System.out.println("ttm | update ");
+		Print.print(partUpdate);
+		int partStatus = userDaoImpl.updateByExampleSelective(partUpdate, partExample);
+		System.out.println("ttm | status ---> " + partStatus);
+		return partStatus == 1 ? true : false;
 	}
 	
-	@Override
 	public boolean modifyUserInfo(Map<String, Object> query) {
-		String partId = query.get("id").toString();
+		String partId = (String) query.get("userId");
 		User partUser = querySingleUser(Integer.valueOf(partId));
-		System.out.println("^^^^^^^^^json:" + Json.toJson(partUser));
+		System.out.println("ttm | 查询数据json ---> " + Json.toJson(partUser));
 		if (partUser == null) {
 			return false;
 		}
-//		Map<String, Object> partQuery = new HashMap<String, Object>();
-//		partQuery.put("userId", Integer.valueOf(query.get("id")));
-//		partQuery.put("nickName", query.get("nickName"));
-//		partQuery.put("sex", Integer.valueOf(query.get("sex")));
-//		partQuery.put("img", query.get("img"));
-		userDaoImpl.updateUser(query);
-		return true;
+
+		Example partExample = new Example(User.class);
+		Criteria partCir = partExample.createCriteria();
+		partCir.andEqualTo("userId", Integer.valueOf(partId));
+		
+		Object partNickName = query.get("nickName");
+		Object partSex = query.get("sex");
+		Object partImg = query.get("img");
+		if (partNickName == null || StringUtils.isEmpty(partNickName.toString())) {
+			System.out.println("ttm | 昵称不能修改为空 或者空值...");
+			return false;
+		} else if (partSex == null) {
+			System.out.println("ttm | 性别不能为空...");
+			return false;
+		} else if (partImg == null) {
+			System.out.println("ttm | 图片不能为空...");
+			return false;
+		}
+		
+		String partNickNameRow = (String) partNickName;
+		Integer partSexRow = Integer.valueOf((String) partSex);
+		String partImgRow = (String) partImg;
+		User partUpdate = new User();
+		partUpdate.setNickName(partNickNameRow);
+		partUpdate.setSex(partSexRow);
+		partUpdate.setImg(partImgRow);
+		
+		System.out.println("ttm | update ----");
+		Print.print(partUpdate);
+		int partStatus = userDaoImpl.updateByExampleSelective(partUpdate, partExample);
+		System.out.println("ttm | status --->" + partStatus);
+		return partStatus == 1 ? true : false;
 	}
 
 	public ResponseBase<Map<String, Object>> constructResultLogin(User user) {

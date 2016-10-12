@@ -3,6 +3,8 @@ package com.dekequan.controller.user;
 import java.util.List;
 import java.util.Map;
 
+import javax.batch.api.partition.PartitionAnalyzer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -30,14 +32,13 @@ import com.dekequan.service.user.UserService;
  * @author qzr + ttm + sj
  *
  */
-@SuppressWarnings("unchecked")
 @Controller
 @RequestMapping(value = "/v1/user")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	@Autowired
+	@Autowired	
 	private MenuService menuService;
 	@Autowired
 	private ArticleService articleService;
@@ -47,18 +48,27 @@ public class UserController {
 	 * 用户登录
 	 * @param request
 	 * @return 
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(@RequestBody User user, @RequestHeader HttpHeaders headers) {
+	public String login(@RequestBody User user, @RequestHeader HttpHeaders headers) throws Exception {
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^request: 登录" + Json.toJson(headers));
 		System.out.println("^^^^^^^^^^^^^^^^^^^^^^request: 登录" + Json.toJson(user));
 		ResponseBase<Map<String, Object>> partResponseBase =  new ResponseBase<Map<String, Object>>();
+		User partUser = null;
+		//try catch 用于处理未知异常
 		try {
-			User partUser = userService.login(user.getUserName(), user.getPassword());
-			partResponseBase = userService.constructResultLogin(partUser);
+			partUser = userService.login(user.getUserName(), user.getPassword());
 		} catch (Exception e) {
-			return Json.toJson(userService.constructCheckCodeError());
+			System.out.println("ttm | error");
+			throw new Exception("查询出现异常");
+		}
+		
+		if (partUser == null) {
+			partResponseBase = userService.constructFindNoInfoError();
+		} else {
+			partResponseBase = userService.constructResultLogin(partUser);
 		}
 		return Json.toJson(partResponseBase);
 	} 
@@ -89,20 +99,25 @@ public class UserController {
 	 * @param id
 	 * @param headers
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	@ResponseBody
-	public String logout(@RequestBody Map<String, Object> request, @RequestHeader HttpHeaders headers) {
+	public String logout(@RequestBody Map<String, Object> request, @RequestHeader HttpHeaders headers) throws Exception {
 		ResponseBase<Map<String, Object>> partResponseBase =  new ResponseBase<Map<String, Object>>();
+		String partId = (String) request.get("userId");
+		boolean partIsLogout = true;
 		try {
-			String partId = (String) request.get("id");
-			if (userService.logout(Integer.valueOf(partId))) {
-				partResponseBase = userService.constructReturnLogout();
-			} else {
-				partResponseBase = userService.constructCheckCodeError();
-			}
+			partIsLogout = userService.logout(Integer.valueOf(partId));
 		} catch (Exception e) {
-			return Json.toJson(userService.constructCheckCodeError());
+			throw new Exception("程序异常...");
+		}
+
+		//判断是否存在修改成功
+		if (partIsLogout) {
+			partResponseBase = userService.constructReturnLogout();
+		} else {
+			partResponseBase = userService.constructCheckCodeError();
 		}
 		return Json.toJson(partResponseBase);
 	}
@@ -112,19 +127,24 @@ public class UserController {
 	 * @param query
 	 * @param headers
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/modifyUserInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public String modifyUserInfo(@RequestBody Map<String, Object> query, @RequestHeader HttpHeaders headers) {
+	public String modifyUserInfo(@RequestBody Map<String, Object> query, @RequestHeader HttpHeaders headers) throws Exception {
+		System.out.println("ttm | query --->" + Json.toJson(query));
 		ResponseBase<Map<String, Object>> partResponseBase =  new ResponseBase<Map<String, Object>>();
+		boolean partIsModifiy = true;
 		try {
-			if (userService.modifyUserInfo(query)) {
-				partResponseBase = userService.constructReturnUserInfo();
-			} else {
-				partResponseBase = userService.constructCheckCodeError();
-			}
+			partIsModifiy = userService.modifyUserInfo(query);
 		} catch (Exception e) {
-			return Json.toJson(userService.constructCheckCodeError());
+			throw new Exception("程序出现异常...");
+		}
+		
+		if (partIsModifiy) {
+			partResponseBase = userService.constructReturnUserInfo();
+		} else {
+			partResponseBase = userService.constructCheckCodeError();
 		}
 		return Json.toJson(partResponseBase);
 	}

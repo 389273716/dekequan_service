@@ -45,7 +45,7 @@ public interface UserService {
 	 * @param user
 	 * @return
 	 */
-	public abstract boolean save(User user);
+	public abstract boolean saveUser(User user);
 
 	/**
 	 * 构建
