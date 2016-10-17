@@ -37,7 +37,7 @@ import com.dekequan.service.user.UserService;
 public class UserController {
 	
 	@Autowired
-	private UserService userService;
+	private UserService userServiceImpl;
 	@Autowired	
 	private MenuService menuService;
 	@Autowired
@@ -59,16 +59,16 @@ public class UserController {
 		User partUser = null;
 		//try catch 用于处理未知异常
 		try {
-			partUser = userService.login(user.getUserName(), user.getPassword());
+			partUser = userServiceImpl.login(user.getUserName(), user.getPassword());
 		} catch (Exception e) {
 			System.out.println("ttm | error");
 			throw new Exception("查询出现异常");
 		}
 		
 		if (partUser == null) {
-			partResponseBase = userService.constructFindNoInfoError();
+			partResponseBase = userServiceImpl.constructFindNoInfoError();
 		} else {
-			partResponseBase = userService.constructResultLogin(partUser);
+			partResponseBase = userServiceImpl.constructResultLogin(partUser);
 		}
 		return Json.toJson(partResponseBase);
 	} 
@@ -87,11 +87,11 @@ public class UserController {
 		String code = "test";
 		// 校验验证码
 		if (!"success".equals(UserUtil.checkCode(code))) {
-			return Json.toJson(userService.constructCheckCodeError());
+			return Json.toJson(userServiceImpl.constructCheckCodeError());
 		}
-		User userNew = userService.register(userName, password);
+		User userNew = userServiceImpl.register(userName, password);
 		
-		return Json.toJson(userService.constructResultRegister(userNew));
+		return Json.toJson(userServiceImpl.constructResultRegister(userNew));
 	}
 	
 	/**
@@ -108,16 +108,16 @@ public class UserController {
 		String partId = (String) request.get("userId");
 		boolean partIsLogout = true;
 		try {
-			partIsLogout = userService.logout(Integer.valueOf(partId));
+			partIsLogout = userServiceImpl.logout(Integer.valueOf(partId));
 		} catch (Exception e) {
 			throw new Exception("程序异常...");
 		}
 
 		//判断是否存在修改成功
 		if (partIsLogout) {
-			partResponseBase = userService.constructReturnLogout();
+			partResponseBase = userServiceImpl.constructReturnLogout();
 		} else {
-			partResponseBase = userService.constructCheckCodeError();
+			partResponseBase = userServiceImpl.constructCheckCodeError();
 		}
 		return Json.toJson(partResponseBase);
 	}
@@ -136,15 +136,15 @@ public class UserController {
 		ResponseBase<Map<String, Object>> partResponseBase =  new ResponseBase<Map<String, Object>>();
 		boolean partIsModifiy = true;
 		try {
-			partIsModifiy = userService.modifyUserInfo(query);
+			partIsModifiy = userServiceImpl.modifyUserInfo(query);
 		} catch (Exception e) {
 			throw new Exception("程序出现异常...");
 		}
 		
 		if (partIsModifiy) {
-			partResponseBase = userService.constructReturnUserInfo();
+			partResponseBase = userServiceImpl.constructReturnUserInfo();
 		} else {
-			partResponseBase = userService.constructCheckCodeError();
+			partResponseBase = userServiceImpl.constructCheckCodeError();
 		}
 		return Json.toJson(partResponseBase);
 	}
@@ -157,14 +157,14 @@ public class UserController {
 		int pageNumber = null == info.get("pageNumber") ? 1 : Integer.parseInt(info.get("pageNumber").toString());
 		int pageSize = null == info.get("pageSize") ? 1 : Integer.parseInt(info.get("pageSize").toString());
 		ResponseBase<Map<String, Object>> response = new ResponseBase<Map<String,Object>>();
-		SimpleUser currentUser = userService.myPublished(dkToken);
+		SimpleUser currentUser = userServiceImpl.myPublished(dkToken);
 		if(null == currentUser){
-			return Json.toJson(userService.constructFindNoInfoError());
+			return Json.toJson(userServiceImpl.constructFindNoInfoError());
 		}
 		List<Article> articles = articleService.fetchArticleList(pageNumber, pageSize);
 		List<Menu> menus = menuService.fetchMenuList(pageSize, pageNumber);
 		
-		return Json.toJson(userService.constructReturnMyPublished(currentUser, menus, articles));
+		return Json.toJson(userServiceImpl.constructReturnMyPublished(currentUser, menus, articles));
 	}
 	
 	/**

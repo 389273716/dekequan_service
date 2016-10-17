@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dekequan.dao.permissions.ResourceDao">
+	<resultMap id="resource" type="Resource">
+		<id column="resource_id" property="resourceId" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+		<result column="structure" property="structure" jdbcType="VARCHAR" />
+		<result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+		<result column="module_flag" property="moduleFlag" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime"
+			jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" 
+		    jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		re.resource_id, name, url, parent_id, structure, sort_no, module_flag,
+		create_time, update_time
+	</sql>
+	
+	<select id="findResourceListByModuleFlag" parameterType="java.lang.String" resultMap="resource">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from dk_resource re
+    	<if test="userId != null and userId != ''">
+    		inner join dk_role_resource arr 
+			on re.resource_id = arr.resource_id
+			inner join dk_user_role aur
+			on arr.role_id = aur.role_id 
+    	</if>
+    	where
+    	re.module_flag in
+    	<foreach collection="moduleFlags" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="userId != null and userId != ''">
+			and aur.user_id = #{userId}
+		</if>
+    </select>
+    
+	<select id="findResourceList" resultMap="resource">
+		select
+		<include refid="Base_Column_List" />
+		from dk_resource re
+	</select>
+
+</mapper>

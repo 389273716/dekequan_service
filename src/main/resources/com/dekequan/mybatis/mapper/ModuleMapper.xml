@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dekequan.dao.permissions.ModuleDao">
+	<resultMap id="module" type="Module">
+		<id column="module_id" property="moduleId" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="flag" property="flag" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		m.module_id, name, flag, url, sort_no, create_time
+	</sql>
+
+	<select id="findModuleListByUserId" resultMap="module">
+	    select 
+	    <include refid="Base_Column_List" />
+	    from dk_module m
+        inner join dk_role_module arm
+		on m.module_id = arm.module_id
+		inner join dk_user_role aur
+		on arm.role_id = aur.role_id
+		where aur.user_id = #{userId}
+    </select>   
+    
+	<select id="findModuleList" resultMap="module">
+	    select
+	    <include refid="Base_Column_List" />
+	    from dk_module m
+	</select>
+	
+</mapper>

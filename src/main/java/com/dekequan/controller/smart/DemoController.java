@@ -3,6 +3,9 @@ package com.dekequan.controller.smart;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.ParameterMode;
+
+import org.apache.http.impl.execchain.MainClientExec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dekequan.library.exception.DefaultExceptionHandler;
 import com.dekequan.library.response.ResponseBase;
@@ -17,6 +21,7 @@ import com.dekequan.library.utils.Json;
 import com.dekequan.library.utils.Print;
 import com.dekequan.orm.smart.Demo;
 import com.dekequan.service.smart.DemoService;
+import com.dekequan.service.smart.PrivilegeBaseService;
 
 /**
  * 
@@ -30,7 +35,20 @@ public class DemoController {
 
 	@Autowired
 	private DemoService demoServiceImpl;
+	
+	@Autowired
+	private PrivilegeBaseService privilegeBaseServiceImpl;
 
+	@RequestMapping(value = "/main", method = RequestMethod.GET)
+	public ModelAndView main() {
+		ModelAndView view = new ModelAndView();
+		String partMenus = privilegeBaseServiceImpl.getModuleTree(null, "p", null);
+		System.out.println("ttm | 打印最后结果..." + partMenus);
+		view.addObject("menus", partMenus);
+		view.setViewName("/d_demo/main");
+		return view;
+	}
+	
 	@RequestMapping(value = "/findById/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public String findById(@PathVariable(value = "id") Integer id) throws Exception {
